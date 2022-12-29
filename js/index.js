@@ -15,7 +15,7 @@ async function getGitProf(event) {
         try {
             // showError('https://api.github.com/users/${username}');
             let response = await fetch('https://api.github.com/users/' + username);
-            console.log(response);
+            // console.log(response);
             let respJSON = await response.json();
             if (response.status != 200) {
                 if (response.status == 404) {
@@ -25,11 +25,11 @@ async function getGitProf(event) {
                 }
                 return Promise.reject('Request failed with error ${response.status}');
             }
-            console.log(respJSON)
+            // console.log(respJSON)
             createCard(respJSON);
         } catch (error) {
             console.log(error);
-            // showError("")
+            showError("There is a problem in:" + error)
         }
 
     }
@@ -38,7 +38,17 @@ async function getGitProf(event) {
 // This function extracts data from input JSON and updates the card (left pannel)
 function createCard(respJSON) {
     profile.src = respJSON.avatar_url;
-    cardUsername.innerHTML = "Username: " + respJSON.login + "<br/>Name: " + respJSON.name;
+    let cardUsernameString = "Username: " + respJSON.login + "<br/>Name: " + respJSON.name;
+    if (respJSON.company != null){
+        cardUsernameString = cardUsernameString + "<br/> Company: " + respJSON.company;
+    }
+    if (respJSON.blog != null){
+        cardUsernameString = cardUsernameString + "<br/> blog: " + respJSON.blog;
+    }
+    if (respJSON.location != null){
+        cardUsernameString = cardUsernameString + "<br/> Location: " + respJSON.location;
+    }
+    cardUsername.innerHTML = cardUsernameString;
     cardBio.innerHTML = "Bio: " + respJSON.bio + "<br/>Public repositories: " + respJSON.public_repos +
         "<br/>Followers: " + respJSON.followers + "<br/>Following: " + respJSON.following;
     cardFooter.innerHTML = "";
