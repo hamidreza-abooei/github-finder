@@ -37,20 +37,30 @@ async function getGitProf(event) {
 }
 // This function extracts data from input JSON and updates the card (left pannel)
 function createCard(respJSON) {
-    profile.src = respJSON.avatar_url;
-    let cardUsernameString = "Username: " + respJSON.login + "<br/>Name: " + respJSON.name;
+    if (respJSON.avatar_url != null){
+        profile.src = respJSON.avatar_url;
+    }
+    let cardUsernameString = "Username: <a href='" + respJSON.html_url + "'>" + respJSON.login + "</a>" ;
+    if (respJSON.name != null){
+        cardUsernameString = cardUsernameString + "<br/>Name: " + respJSON.name;
+    }
     if (respJSON.company != null){
         cardUsernameString = cardUsernameString + "<br/> Company: " + respJSON.company;
     }
     if (respJSON.blog != null){
-        cardUsernameString = cardUsernameString + "<br/> blog: " + respJSON.blog;
+        cardUsernameString = cardUsernameString + "<br/> blog: <a href='" + respJSON.blog+"'>"+respJSON.blog+"</a>";
     }
     if (respJSON.location != null){
         cardUsernameString = cardUsernameString + "<br/> Location: " + respJSON.location;
     }
     cardUsername.innerHTML = cardUsernameString;
-    cardBio.innerHTML = "Bio: " + respJSON.bio + "<br/>Public repositories: " + respJSON.public_repos +
-        "<br/>Followers: " + respJSON.followers + "<br/>Following: " + respJSON.following;
+    let cardBioString = "";
+    if (respJSON.bio!=null){
+        cardBioString = cardBioString + "Bio: " + respJSON.bio;
+    }
+    cardBioString = cardBioString + "<br/>Public repositories: " + respJSON.public_repos +
+    "<br/>Followers: " + respJSON.followers + "<br/>Following: " + respJSON.following;
+    cardBio.innerHTML = cardBioString;
     cardFooter.innerHTML = "";
     const creationDateElement = document.createElement("span");
     const nodec = document.createTextNode("Created at: " + respJSON.created_at.slice(0, 10));
@@ -63,10 +73,11 @@ function createCard(respJSON) {
 
 }
 
-async function saveUsernames() {
+async function saveUsernames(respJSON) {
 
 
 }
+
 
 // This regex has been extracted from: https://github.com/shinnn/github-username-regex
 function checkValidity(name) {
