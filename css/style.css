@@ -1,6 +1,80 @@
-element {
-}
+element {}
+
 body {
-  background: url(../resources/octocat.png);
-  background-size: cover;
+  background: url(../resources/octocat.png) no-repeat center center fixed;
+  background-size: contain;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: darkgray;
+  opacity: 0.8;
+  border-radius: 10px;
+
+  /* width: 30%; */
+}
+
+.container.side {
+  padding: 5em;
+}
+
+.fieldset {
+  /* min-height: 15.5em; */
+  text-align: center;
+  gap: 5em;
+}
+
+#profile {
+  alt: "profile image";
+  width: 100%;
+  /* height: 10%; */
+  /* scale: 10%; */
+}
+
+.side {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+}
+
+.half {
+  width: 30%;
+}
+
+#user-detail {
+  grid-template-columns: 1fr 3fr
+}
+
+.card-panel {
+  height:500em;
+}
+.inputitem {
+  position: relative;
+  text-align: center;
+  margin: 10pt;
+  padding: 10pt;
+  font-size: large;
+}
+.button {
+  /* width: 15em; */
+  /* height: 2em; */
+  background: #333;
+  color: #fff;
+}
+.cardfooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content:start;
+  margin: 10pt;
+}
+.detail {
+  margin: 5pt;
 }

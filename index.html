@@ -1,21 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>
-            Github User Finder
-        </title>
-        <link rel="stylesheet" href="./css/style.css"/>
-        <link rel="icon" href="./resources/icon.jpeg"/>
-    </head>
-    <body>
-        <div class="container">
-            <div class="search-pannel">
 
-            </div>
-            <div class="card-pannel">
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        Github User Finder
+    </title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" href="./resources/icon.jpeg" />
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+</head>
 
-            </div>
+<body>
+    <!--<ul>
+        <li>
+            <img href = >
+        </li>
+    </ul>!-->
+
+    <span class="container side">
+        <div class="search-pannel">
+            <fieldset>
+                <!-- <legend class="legend">Card</legend> -->
+                <div class="card">
+                    <div class="side" id ="user-detail">
+                        <div>
+                            <img id="profile" src="./resources/Default_Profile_image.png" />
+                        </div>
+                        <div class="details">
+                            <span id="usernamelabel" class="detail">Username:</span>
+                            <br/>
+                            <span id="biolabel" class="detail">Bio:</span>
+                        </div>
+                    </div>
+                    <div class="cardfooter">
+                        <span id="createlabel" class="detail">Creation date:</span>
+                        <span id="lastlabel" class="detail">Last edit</span>
+                    </div>
+                </div>
+            </fieldset>
         </div>
-    </body>
+        <div class="card-pannel">
+            <form>
+                <fieldset class="fieldset">
+                    <!-- <legend class="legend">Enter</legend> -->
+                    <!-- <br/> -->
+                    <label class="inputitem">Enter Username:</label>
+                    <!-- <br/> -->
+                    <input class="inputitem" type="text" />
+                    <!-- <br/> -->
+                    <input class="inputitem button" type="button" value="Submit" />
+                </fieldset>
+            </form>
+        </div>
+    </span>
+    <script src="./js/index.js"></script>
+</body>
+
 </html>
