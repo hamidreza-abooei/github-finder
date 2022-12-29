@@ -14,22 +14,27 @@ async function getGitProf(event) {
     if (checkValidity(username)) {
         try {
             // showError('https://api.github.com/users/${username}');
-            let response = await fetch('https://api.github.com/users/' + username);
-            // console.log(response);
-            let respJSON = await response.json();
-            if (response.status != 200) {
-                if (response.status == 404) {
-                    showError("Username does not exist.")
-                } else {
-                    showError("Connection Error. Try again later.")
+            let respJSON;
+            let savedJSON = loadUsernameDetails(username);
+            if (savedJSON == null){
+                let response = await fetch('https://api.github.com/users/' + username);
+                respJSON = await response.json();
+                if (response.status != 200) {
+                    if (response.status == 404) {
+                        showError("Username does not exist.")
+                    } else {
+                        showError("Connection Error. Try again later.")
+                    }
+                    return Promise.reject('Request failed with error ${response.status}');
                 }
-                return Promise.reject('Request failed with error ${response.status}');
+                saveUsernames(respJSON);
+            }else{
+                respJSON = JSON.parse(savedJSON);
             }
-            // console.log(respJSON)
             createCard(respJSON);
         } catch (error) {
             console.log(error);
-            showError("There is a problem in:" + error)
+            showError(""+error)
         }
 
     }
@@ -73,11 +78,16 @@ function createCard(respJSON) {
 
 }
 
-async function saveUsernames(respJSON) {
-
-
+// Function to save every successfull inqueries into local storages
+function saveUsernames(respJSON) {
+    localStorage.setItem(respJSON.login,JSON.stringify(respJSON));
 }
 
+// Function to load a username from local storage
+function loadUsernameDetails(username){
+    const savedJSON = localStorage.getItem(username);
+    return savedJSON;
+}
 
 // This regex has been extracted from: https://github.com/shinnn/github-username-regex
 function checkValidity(name) {
