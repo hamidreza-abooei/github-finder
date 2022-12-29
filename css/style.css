@@ -1,13 +1,11 @@
-/* @font-face {
-  font-family:'Courier New', Courier, monospace;
-  src: url();
-} */
+/* Set background image and font */
 body {
   background: url(../resources/octocat.png) no-repeat center center fixed;
   background-size: contain;
-  font-family:'Courier New', Courier, monospace ;
+  font-family: 'Courier New', Courier, monospace;
 }
 
+/* Change fieldset defaults to transparent and flex container for right and left panels */
 fieldset {
   display: flex;
   flex-direction: column;
@@ -15,27 +13,27 @@ fieldset {
   background-color: darkgray;
   opacity: 0.8;
   border-radius: 20px;
-
-  /* width: 30%; */
 }
 
+/* Add padding to inner container */
 .container.side {
   padding: 5em;
 }
 
+/* Change right pannel flex settings */
 .fieldset {
-  /* min-height: 15.5em; */
   text-align: center;
   gap: 1em;
 }
 
+/* Set profile image css */
 #profileImg {
   alt: "profile image";
   width: 100%;
-  /* height: 10%; */
-  /* scale: 10%; */
+  border-radius: 30%;
 }
 
+/* set the grid settings for pannels containers */
 .side {
   padding: 20px;
   display: grid;
@@ -43,18 +41,12 @@ fieldset {
   grid-gap: 20px;
 }
 
-.half {
-  width: 30%;
-}
-
+/* Set grid for inner card */
 #user-detail {
   grid-template-columns: 1fr 3fr
 }
 
-.card-panel {
-  height: 500em;
-}
-
+/* Settings for button and text input */
 .inputitem {
   position: relative;
   text-align: center;
@@ -64,19 +56,20 @@ fieldset {
   font-family: inherit;
 }
 
+/* Button collor settings */
 .button {
-  /* width: 15em; */
-  /* height: 2em; */
   background: #333;
   color: #fff;
 }
 
+/* Flex structure for card footer.(contains dates) */
 .cardfooter {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
+/* Card all details settings */
 .details {
   display: flex;
   flex-direction: column;
@@ -84,29 +77,21 @@ fieldset {
   margin: 10pt;
 }
 
+/* Card each details settings */
 .detail {
   margin: 5pt;
 }
 
+/* Error form in top of card pannel settings, hide in default */
 .errorForm {
-  /* border-color: #f55; */
-  /* border: 1pt; */
-  /* border-style: solid; */
-  /* align-items: center; */
   margin: 5pt;
   padding-left: 10pt;
   display: none;
-  /* display: flex;
-  flex-direction: row;
-  justify-content: center; */
 }
 
+/* Error Fieldset color settings */
 .errorfieldset {
   border-color: #f55;
   background-color: #f88;
 
-}
-
-#profileImg{
-  border-radius: 30%;
 }
