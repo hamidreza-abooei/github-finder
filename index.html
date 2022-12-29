@@ -8,7 +8,7 @@
     </title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="icon" href="./resources/icon.jpeg" />
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/a81368914c.js"></script> -->
 </head>
 
 <body>
@@ -23,9 +23,19 @@
             <fieldset>
                 <!-- <legend class="legend">Card</legend> -->
                 <div class="card">
+                    <!-- <div class="error"> -->
+                        <form class="errorForm">
+                            <fieldset class="errorfieldset">
+                                <legend id="errorlegend">Error</legend>
+                                <!-- <label id="errorMsg" >Your internet connection disconected.</label> -->
+
+                            </fieldset>
+                        </form>
+                        
+                    <!-- </div> -->
                     <div class="side" id ="user-detail">
                         <div>
-                            <img id="profile" src="./resources/Default_Profile_image.png" />
+                            <img id="profileImg" src="./resources/Default_Profile_image.png" />
                         </div>
                         <div class="details">
                             <span id="usernamelabel" class="detail">Username:</span>
@@ -34,8 +44,8 @@
                         </div>
                     </div>
                     <div class="cardfooter">
-                        <span id="createlabel" class="detail">Creation date:</span>
-                        <span id="lastlabel" class="detail">Last edit</span>
+                        <!-- <span id="createlabel" class="detail">Creation date:</span>
+                        <span id="lastlabel" class="detail">Last edit</span> -->
                     </div>
                 </div>
             </fieldset>
@@ -47,9 +57,9 @@
                     <!-- <br/> -->
                     <label class="inputitem">Enter Username:</label>
                     <!-- <br/> -->
-                    <input class="inputitem" type="text" />
+                    <input class="inputitem" type="text" id="inputUsername"/>
                     <!-- <br/> -->
-                    <input class="inputitem button" type="button" value="Submit" />
+                    <input class="inputitem button" type="button" id="submitBtn" value="Submit" />
                 </fieldset>
             </form>
         </div>
