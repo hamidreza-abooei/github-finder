@@ -39,7 +39,7 @@ function createCard(respJSON){
     profile.src = respJSON.avatar_url;
     cardUsername.innerHTML = "Username: " + respJSON.login + "<br/>Name: " + respJSON.name;
     cardBio.innerHTML = "Bio: " + respJSON.bio + "<br/>Followers: " +
-                         respJSON.followers+"<br/>Following: " + respJSON.folling+
+                         respJSON.followers+"<br/>Following: " + respJSON.following+
                          "<br/>Public repositories: "+ respJSON.public_repos;
     cardFooter.innerHTML = "";
     const creationDateElement = document.createElement("span");
