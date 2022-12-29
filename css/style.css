@@ -1,11 +1,11 @@
 /* @font-face {
-  font-family: au;
+  font-family:'Courier New', Courier, monospace;
   src: url();
 } */
 body {
   background: url(../resources/octocat.png) no-repeat center center fixed;
   background-size: contain;
-  /* font-family: ; */
+  font-family:'Courier New', Courier, monospace ;
 }
 
 fieldset {
@@ -26,7 +26,7 @@ fieldset {
 .fieldset {
   /* min-height: 15.5em; */
   text-align: center;
-  gap: 5em;
+  gap: 1em;
 }
 
 #profileImg {
@@ -61,6 +61,7 @@ fieldset {
   margin: 10pt;
   padding: 10pt;
   font-size: large;
+  font-family: inherit;
 }
 
 .button {
