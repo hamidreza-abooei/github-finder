@@ -38,7 +38,9 @@ async function getGitProf(event) {
 function createCard(respJSON){
     profile.src = respJSON.avatar_url;
     cardUsername.innerHTML = "Username: " + respJSON.login + "<br/>Name: " + respJSON.name;
-    cardBio.innerHTML = "Bio: " + respJSON.bio;
+    cardBio.innerHTML = "Bio: " + respJSON.bio + "<br/>Followers: " +
+                         respJSON.followers+"<br/>Following: " + respJSON.folling+
+                         "<br/>Public repositories: "+ respJSON.public_repos;
     cardFooter.innerHTML = "";
     const creationDateElement = document.createElement("span");
     const nodec = document.createTextNode("Created at: " + respJSON.created_at.slice(0,10));
