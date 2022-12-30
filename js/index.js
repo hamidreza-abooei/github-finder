@@ -28,14 +28,12 @@ async function getGitProf(event) {
                     return Promise.reject('Request failed with error ${response.status}');
                 }
                 saveUsernames(respJSON);
+                getFavLang(respJSON);
             }else{
                 respJSON = JSON.parse(savedJSON);
             }
-            getFavLang(respJSON);
-            // console.log(toplang);
-            // respJSON.topLang = toplang;
-            // console.log(respJSON.topLang);
             createCard(respJSON);
+            callFavLangFromStorage(username);
         } catch (error) {
             console.log(error);
             showError(""+error)
@@ -84,40 +82,20 @@ function createCard(respJSON) {
 
 }
 
+// Get favorite laguage works with the following parameters: 5 recent pushed repos that has language.
+// It reports the highest score language in which high score here defines as higher size.
 async function getFavLang(respJSON){
     try{
         let response = await fetch(respJSON.repos_url);
         if (response.status != 200) {
             return Promise.reject('Request failed with error ${response.status}');
         }
-        // console.log(response);  
         const repos = await response.json();
-        // console.log(repos);
-        // console.log(repos.length)
-        // let repoNum = 0;
-
-        // let lastrepos = []
-        // for (let repoNum=0;repoNum<repos.length;repoNum++){
-        //     let repo = repos[repoNum];
-        //     for (let lastrepoCounter=0;lastrepoCounter<)
-        //     console.log(a.language);
-        // }
-        // for (let repoNum=0;repoNum<repos.length;repoNum++){
-        //     console.log(repos[repoNum].pushed_at);
-        // }
         repos.sort(customSort);
-        // console.log(repos);
-        // console.log(repos);
-        // for (let repoNum=0;repoNum<repos.length;repoNum++){
-        //     console.log(repos[repoNum].pushed_at);
-        // }
-        // let checklen = min(5,repos.length)
-        // console.log(checklen);
         let topLang = null;
         let score = 0;
         let maxRepos = 5;
         for (let repoNum=0;repoNum<maxRepos;repoNum++){
-            // console.log(repos[repoNum].pushed_at);
             let repo = repos[repoNum];
             if (repo == null){
                 break;
@@ -129,35 +107,44 @@ async function getFavLang(respJSON){
             if (repo.size>score){
                 score = repo.size;
                 topLang = repo.language;
-                // console.log(topLang);
-                // console.log(repo.name);
             }
         }
-        // console.log(topLang);
-        console.log(topLang)
-        if (topLang!=null){
-            addLangToCard(topLang);
-        }
-        // return topLang;
+        addLangToCard(topLang);
+        saveTopLang(respJSON , topLang);
         
+                
     }catch (error){
         console.log(error);
     }
-
-
-}
-function addLangToCard(topLang){
-    
-    cardBio.innerHTML = cardBio.innerHTML  + "<br/>Top Language: " + topLang;
 }
 
+// Save TopLang in local storage
+function saveTopLang(respJSON,topLang){
+    localStorage.setItem(respJSON.login+"-TopLang",topLang);
+}
+
+// Sort in respect to date Desending.
 function customSort(a,b){
     let time1 = a.pushed_at;
     let time2 = b.pushed_at;
     let res = new Date(time2) - new Date(time1);
-    // console.log(res);
     return res;
 }
+
+// According to GET and calculate top language seperately, This function add the final results to our card
+function addLangToCard(topLang){
+    if (topLang!=null){
+        cardBio.innerHTML = cardBio.innerHTML  + "<br/>Top Language: " + topLang;
+    }
+}
+
+// Load Top Lang from Local storage and call addLangToCard to show it on card
+function callFavLangFromStorage(username){
+    const TopLang = localStorage.getItem(username+"-TopLang");
+    addLangToCard(TopLang);
+}
+   
+
 
 // Function to save every successfull inqueries into local storages
 function saveUsernames(respJSON) {
