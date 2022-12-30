@@ -16,7 +16,7 @@ async function getGitProf(event) {
             // showError('https://api.github.com/users/${username}');
             let respJSON;
             let savedJSON = loadUsernameDetails(username);
-            if (savedJSON == null){
+            if (savedJSON == null) {
                 let response = await fetch('https://api.github.com/users/' + username);
                 respJSON = await response.json();
                 if (response.status != 200) {
@@ -29,14 +29,14 @@ async function getGitProf(event) {
                 }
                 saveUsernames(respJSON);
                 getFavLang(respJSON);
-            }else{
+            } else {
                 respJSON = JSON.parse(savedJSON);
             }
             createCard(respJSON);
             callFavLangFromStorage(username);
         } catch (error) {
             console.log(error);
-            showError(""+error)
+            showError("" + error)
         }
 
     }
@@ -44,31 +44,31 @@ async function getGitProf(event) {
 }
 // This function extracts data from input JSON and updates the card (left pannel)
 function createCard(respJSON) {
-    if (respJSON.avatar_url != null){
+    if (respJSON.avatar_url != null) {
         profile.src = respJSON.avatar_url;
     }
-    let cardUsernameString = "Username: <a href='" + respJSON.html_url + "'>" + respJSON.login + "</a>" ;
-    if (respJSON.name != null){
+    let cardUsernameString = "Username: <a href='" + respJSON.html_url + "'>" + respJSON.login + "</a>";
+    if (respJSON.name != null) {
         cardUsernameString = cardUsernameString + "<br/>Name: " + respJSON.name;
     }
-    if (respJSON.company != null){
+    if (respJSON.company != null) {
         cardUsernameString = cardUsernameString + "<br/> Company: " + respJSON.company;
     }
-    if (respJSON.blog != null){
-        cardUsernameString = cardUsernameString + "<br/> blog: <a href='" + respJSON.blog+"'>"+respJSON.blog+"</a>";
+    if (respJSON.blog != null) {
+        cardUsernameString = cardUsernameString + "<br/> blog: <a href='" + respJSON.blog + "'>" + respJSON.blog + "</a>";
     }
-    if (respJSON.location != null){
+    if (respJSON.location != null) {
         cardUsernameString = cardUsernameString + "<br/> Location: " + respJSON.location;
     }
     cardUsername.innerHTML = cardUsernameString;
     let cardBioString = "";
-    if (respJSON.bio!=null){
+    if (respJSON.bio != null) {
         cardBioString = cardBioString + "Bio: " + respJSON.bio;
     }
-    
+
     cardBioString = cardBioString + "<br/>Public repositories: " + respJSON.public_repos +
-    "<br/>Followers: " + respJSON.followers + "<br/>Following: " + respJSON.following;
-    
+        "<br/>Followers: " + respJSON.followers + "<br/>Following: " + respJSON.following;
+
     cardBio.innerHTML = cardBioString;
     cardFooter.innerHTML = "";
     const creationDateElement = document.createElement("span");
@@ -84,8 +84,8 @@ function createCard(respJSON) {
 
 // Get favorite laguage works with the following parameters: 5 recent pushed repos that has language.
 // It reports the highest score language in which high score here defines as higher size.
-async function getFavLang(respJSON){
-    try{
+async function getFavLang(respJSON) {
+    try {
         let response = await fetch(respJSON.repos_url);
         if (response.status != 200) {
             return Promise.reject('Request failed with error ${response.status}');
@@ -95,36 +95,36 @@ async function getFavLang(respJSON){
         let topLang = null;
         let score = 0;
         let maxRepos = 5;
-        for (let repoNum=0;repoNum<maxRepos;repoNum++){
+        for (let repoNum = 0; repoNum < maxRepos; repoNum++) {
             let repo = repos[repoNum];
-            if (repo == null){
+            if (repo == null) {
                 break;
             }
-            if (repo.language == null){
+            if (repo.language == null) {
                 maxRepos++;
                 continue
             }
-            if (repo.size>score){
+            if (repo.size > score) {
                 score = repo.size;
                 topLang = repo.language;
             }
         }
         addLangToCard(topLang);
-        saveTopLang(respJSON , topLang);
-        
-                
-    }catch (error){
+        saveTopLang(respJSON, topLang);
+
+
+    } catch (error) {
         console.log(error);
     }
 }
 
 // Save TopLang in local storage
-function saveTopLang(respJSON,topLang){
-    localStorage.setItem(respJSON.login+"-TopLang",topLang);
+function saveTopLang(respJSON, topLang) {
+    localStorage.setItem(respJSON.login + "-TopLang", topLang);
 }
 
 // Sort in respect to date Desending.
-function customSort(a,b){
+function customSort(a, b) {
     let time1 = a.pushed_at;
     let time2 = b.pushed_at;
     let res = new Date(time2) - new Date(time1);
@@ -132,27 +132,27 @@ function customSort(a,b){
 }
 
 // According to GET and calculate top language seperately, This function add the final results to our card
-function addLangToCard(topLang){
-    if (topLang!=null){
-        cardBio.innerHTML = cardBio.innerHTML  + "<br/>Top Language: " + topLang;
+function addLangToCard(topLang) {
+    if (topLang != null) {
+        cardBio.innerHTML = cardBio.innerHTML + "<br/>Top Language: " + topLang;
     }
 }
 
 // Load Top Lang from Local storage and call addLangToCard to show it on card
-function callFavLangFromStorage(username){
-    const TopLang = localStorage.getItem(username+"-TopLang");
+function callFavLangFromStorage(username) {
+    const TopLang = localStorage.getItem(username + "-TopLang");
     addLangToCard(TopLang);
 }
-   
+
 
 
 // Function to save every successfull inqueries into local storages
 function saveUsernames(respJSON) {
-    localStorage.setItem(respJSON.login,JSON.stringify(respJSON));
+    localStorage.setItem(respJSON.login, JSON.stringify(respJSON));
 }
 
 // Function to load a username from local storage
-function loadUsernameDetails(username){
+function loadUsernameDetails(username) {
     const savedJSON = localStorage.getItem(username);
     return savedJSON;
 }

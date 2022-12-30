@@ -26,6 +26,13 @@ fieldset {
   gap: 1em;
 }
 
+/* Bring profile photo to the center */
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* Set profile image css */
 #profileImg {
   alt: "profile image";
